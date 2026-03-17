@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build Docker Images') {
+            steps {
+                sh 'docker build -t yourdockerhub/backend backend/'
+                sh 'docker build -t yourdockerhub/worker worker/'
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                sh 'docker push yourdockerhub/backend'
+                sh 'docker push yourdockerhub/worker'
+            }
+        }
+
+        stage('Deploy Kubernetes') {
+            steps {
+                sh 'kubectl apply -f kubernetes/'
+            }
+        }
+
+    }
+}

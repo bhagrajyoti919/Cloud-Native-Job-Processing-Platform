@@ -1,0 +1,13 @@
+groups:
+  - name: queue_alerts
+
+    rules:
+
+      - alert: QueueBacklogHigh
+        expr: queue_size > 50
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Queue backlog is too high"
+          description: "Queue size is above 50 jobs"
